@@ -11,7 +11,9 @@ class Server {
         this.port = process.env.PORT
 
         //Listado de endpoint
-        this.paths = []
+        this.paths = {
+            user: '/api/user'
+        }
 
         //Conexion de base de datos
         this.connectDB()
@@ -38,7 +40,7 @@ class Server {
     }
 
     routes(){
-
+        this.app.use(this.paths.user, require('./routes/user.route'))
     }
 
     listeb(){
