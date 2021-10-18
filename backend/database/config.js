@@ -1,16 +1,31 @@
-const mongoose = require('mongoose')
+/**
+ * Configuración de la conexion de mongodb
+ * con mongoose
+ */
+ const mongoose = require('mongoose')
 
-const dbConnection = async() =>{
-
-    try{
-        await mongoose.connect(process.env.MONGODB_CNN)
-        console.log('Base de datos online')
-    }catch(error){
-        throw new Error('Problema de conexion de la base de datos')
-    }
-
-}
-
-module.exports = {
-    dbConnection
-}
+ //Función establece conexión con mongodb
+ const dbConnection = async() =>{
+     try {
+         await mongoose.connect(process.env.MONGODB_CNN)
+         console.log('Connected')
+     } catch (error) {
+         //Si la conexion falla
+         throw new Error('Connection error')
+     }
+ }
+ 
+ //Funcion cerrar connexion con mongodb
+ const dbDisconnection = async() =>{
+     try {
+         await mongoose.disconnect()
+         console.log("Disconneted")
+     }catch(error){
+         throw new Error('No existe conecion')
+     }
+ }
+ 
+ module.exports = {
+     dbConnection,
+     dbDisconnection
+ }
