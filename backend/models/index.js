@@ -1,11 +1,11 @@
-const documentType = require('./document_type')
-const area = require('./area')
-const country = require('./country')
-const user = require('./user')
+const DocumentType = require('./document_type')
+const Area = require('./area')
+const Country = require('./country')
+const User = require('./user')
 
 module.exports = {
-    documentType,
-    area,
-    country,
-    user
+    DocumentType,
+    Area,
+    Country,
+    User
 }
