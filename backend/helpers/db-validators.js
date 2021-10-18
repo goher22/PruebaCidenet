@@ -1,6 +1,11 @@
 
 const { DocumentType, Area, Country, User } = require('../models')
 
+const existsUserId = async (id) => {
+    const existeUser = await User.findById(id)
+    if(!existeUser) throw new Error(`El id ${id} no existe`)
+}
+
 const existsdocument_type = async (id) => {
     const document_type = await DocumentType.findById(id)
     if(!document_type) throw new Error(`El id ${id} no existe`)
@@ -25,5 +30,6 @@ module.exports = {
     existsdocument_type,
     existscountry,
     existsarea,
-    existsDocument
+    existsDocument,
+    existsUserId
 }
