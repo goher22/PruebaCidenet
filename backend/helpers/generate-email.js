@@ -5,7 +5,7 @@ const { Country, User } = require('../models')
 const generateEmail = async (first_name, surname, id_country) => {
 
     var countemail = 0
-    var init_email = `${first_name}.${surname}`
+    var init_email = `${first_name.toLowerCase()}.${surname.toLowerCase()}`
     var exists_email = ''
 
     const country = await Country.findById(id_country)
@@ -16,7 +16,7 @@ const generateEmail = async (first_name, surname, id_country) => {
         exists_email = await User.findOne({email: `${init_email}@cidenet.com.${country.iso}`})
         if(exists_email) {
             countemail++
-            init_email = `${first_name}.${surname}.${countemail}`
+            init_email = `${first_name.toLowerCase()}.${surname.toLowerCase()}.${countemail}`
         }
 
     }while(exists_email != null)
