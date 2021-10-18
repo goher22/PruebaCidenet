@@ -13,8 +13,8 @@ const main = async () => {
 
         //Paises inicial
         const countries = [
-            new Country({ name: 'Colombia' }),
-            new Country({ name: 'Estados Unidos' })
+            new Country({ name: 'Colombia', iso: 'co' }),
+            new Country({ name: 'Estados Unidos', iso: 'us' })
         ]
 
         //Areas inicial
