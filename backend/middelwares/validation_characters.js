@@ -14,6 +14,19 @@ const validationCharacters = (req, res, next) => {
     next()
 }
 
+const validationDate = (req, res, next) => {
+    const { date_admission } = req.body
+
+    const date_ad = Date(date_admission)
+    const datanow = Date.now
+
+    if(date_ad > datanow)
+        return res.status(400).json({msg: 'Fecha no valida'});
+
+    next()
+}
+
 module.exports = {
-    validationCharacters
+    validationCharacters,
+    validationDate
 }
