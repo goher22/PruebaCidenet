@@ -55,13 +55,29 @@ export default new Vuex.Store({
     },
     async load_users ({commit}) {
       const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/user`)
-      console.log(resp.data.Users)
       commit('set_users', resp.data.Users)
+    },
+    async update_users ({commit}, user) {
+      try{
+        await axios.put(`${process.env.VUE_APP_URL_API}/api/user`, user)
+        commit('', user)
+        return { ok: true}
+      }catch (error) {
+        return {ok: false, msg:error.response.data.errors[0].msg}
+      }
+    },
+    async delete_users ({_}, id) {
+      try {
+        await axios.delete(`${process.env.VUE_APP_URL_API}/api/user/${id}`)
+        return { ok: true}
+      } catch (error) {
+        return {ok: false, msg:error.response.data.errors[0].msg}
+      }
     },
     async save_user({_}, user) {
       try {
-        const resp = await axios.post(`${process.env.VUE_APP_URL_API}/api/user`, user)
-        return { ok: true}  
+        await axios.post(`${process.env.VUE_APP_URL_API}/api/user`, user)
+        return { ok: true}
       } catch (error) {
         return {ok: false, msg:error.response.data.errors[0].msg}
       }
