@@ -13,7 +13,9 @@ class Server {
         //Listado de endpoint
         this.paths = {
             user: '/api/user',
-            country: '/api/country'
+            country: '/api/country',
+            area: '/api/area',
+            documentType: '/api/documentType'
         }
 
         //Conexion de base de datos
@@ -43,6 +45,8 @@ class Server {
     routes(){
         this.app.use(this.paths.user, require('./routes/user.route'))
         this.app.use(this.paths.country, require('./routes/country.route'))
+        this.app.use(this.paths.documentType, require('./routes/documentype.route'))
+        this.app.use(this.paths.area, require('./routes/area.route'))
     }
 
     listeb(){

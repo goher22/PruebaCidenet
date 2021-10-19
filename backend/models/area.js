@@ -12,4 +12,9 @@ const AreaSchema = Schema({
     }
 })
 
+AreaSchema.methods.toJSON = function(){
+    const {__v, state, ...data} = this.toObject()
+    return data
+}
+
 module.exports = model('Area', AreaSchema)

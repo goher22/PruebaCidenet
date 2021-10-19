@@ -12,4 +12,9 @@ const document_typeSchema = Schema({
     }
 })
 
+document_typeSchema.methods.toJSON = function(){
+    const {__v, state, ...data} = this.toObject()
+    return data
+}
+
 module.exports = model('Document_type', document_typeSchema)
