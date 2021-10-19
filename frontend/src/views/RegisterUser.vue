@@ -1,6 +1,6 @@
 <template>
     <div>
-        <formUser></formUser>
+        <formUser title="Registro de Usuario"></formUser>
     </div>
 </template>
 

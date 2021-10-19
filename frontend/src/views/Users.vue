@@ -32,7 +32,7 @@
                     <td>{{item.country.name}}</td>
                     <td>{{item.email}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" @click="editUser(item)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <button type="button" class="btn btn-danger" @click="showModal(item)">
@@ -43,22 +43,26 @@
             </tbody>
         </table>
         <Alert v-if="ishowModal" msg="Está seguro de que desea eliminar el empleado" @ok="even_ok" @close="ishowModal = false"></Alert>
+        <EditUser v-if="ishowEditUser" :dataprops="userdata" @close="ishowEditUser = false"></EditUser>
     </div>
 </template>
 
 <script>
 import Alert from '@/components/alert_modal.vue';
+import EditUser from '@/components/user_modal.vue'
 import {mapActions, mapGetters} from 'vuex'
 export default {
     name: 'Users',
     data() {
       return {
         ishowModal: false,
+        ishowEditUser: false,
         userdata: {}
       };
     },
     components: {
-        Alert
+        Alert,
+        EditUser
     },
     computed: {
         ...mapGetters(['getUsers'])
@@ -70,6 +74,12 @@ export default {
                 ...data
             }
             this.ishowModal = true
+        },
+        editUser(data) {
+            this.userdata = {
+                ...data
+            },
+            this.ishowEditUser = true
         },
         even_ok(){
             this.delete_users(this.userdata._id)

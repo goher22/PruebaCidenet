@@ -1,7 +1,7 @@
 <template>
     <form class="container" @submit.prevent="saveUser">
         <div class="form-row my-5">
-            <h1 class="mx-auto">Registro de usuario</h1>
+            <h1 class="mx-auto">{{title}}</h1>
         </div>
         <div v-if="alert.open" class="alert alert-danger" role="alert">
             {{alert.msg}}
@@ -63,9 +63,11 @@
 <script>
 import {mapGetters, mapActions} from 'vuex'
 export default {
+    props: ['userprops', 'title'],
     data () {
         return {
             user_data: {
+                _id: null,
                 document_type: '',
                 document: '',
                 first_name: '',
@@ -86,12 +88,38 @@ export default {
         ...mapGetters(['getCountries', 'getDocuments', 'getAreas'])
     },
     methods: {
-        ...mapActions(['save_user']),
+        ...mapActions(['save_user', 'update_users']),
         saveUser () {
-            this.save_user(this.user_data).then(resp => {
-                this.alert.open = !resp.ok
-                this.alert.msg = resp.msg
-            })
+            if(this.user_data._id === null || this.user_data._id === undefined )
+                this.save_user(this.user_data).then(resp => {
+                    this.alert.open = !resp.ok
+                    this.alert.msg = resp.msg
+                })
+            else
+                this.update_users(this.user_data).then(resp => {
+                    this.alert.open = !resp.ok
+                    this.alert.msg = resp.msg
+                    this.$emit('close')
+                })
+        }
+    },
+    mounted: function () {
+        if(this.userprops){
+            //Retirando valores no necesarios
+            const {country, state, email, date_created, date_admission,...data} = this.userprops
+
+            //Parceando la fecha
+            const dateadmission = new Date(date_admission)
+            const day = dateadmission.getDay() < 10 ? '0'+dateadmission.getDay() : dateadmission.getDay()
+            const month = (dateadmission.getMonth()+1) < 10 ? '0'+(dateadmission.getMonth()+1) : dateadmission.getMonth()+1
+            const year = (dateadmission.getFullYear()) < 10 ? '0'+dateadmission.getFullYear() : dateadmission.getFullYear()
+
+            //Reasignando valores
+            this.user_data = {
+                country: country._id,
+                ...data,
+                date_admission: `${year}-${month}-${day}`
+            }
         }
     }
 }

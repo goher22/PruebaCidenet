@@ -37,6 +37,19 @@ export default new Vuex.Store({
     },
     set_users (state, obj) {
       state.list_user = obj
+    },
+    set_edit_uset (state, obj) {
+      const index = state.list_user.map(function (u) {return u._id}).indexOf(obj._id)
+      const {country, ...data} = obj
+      const countries = state.list_country.findIndex(c => c._id === country)
+      const {email} = state.list_user[index]
+      if(index >= 0) {
+        state.list_user[index] = {
+          ...data,
+          email,
+          country: state.list_country[countries]
+        }
+      }
     }
 
   },
@@ -59,8 +72,8 @@ export default new Vuex.Store({
     },
     async update_users ({commit}, user) {
       try{
-        await axios.put(`${process.env.VUE_APP_URL_API}/api/user`, user)
-        commit('', user)
+        await axios.put(`${process.env.VUE_APP_URL_API}/api/user/${user._id}`, user)
+        commit('set_edit_uset', user)
         return { ok: true}
       }catch (error) {
         return {ok: false, msg:error.response.data.errors[0].msg}
