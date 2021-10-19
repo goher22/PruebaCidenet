@@ -49,6 +49,14 @@ export default new Vuex.Store({
     async load_document ({commit}) {
       const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/documentType`)
       commit('set_document', resp.data.DocumentsType)
+    },
+    async save_user({_}, user) {
+      try {
+        const resp = await axios.post(`${process.env.VUE_APP_URL_API}/api/user`, user)
+        return { ok: true}  
+      } catch (error) {
+        return {ok: false, msg:error.response.data.errors[0].msg}
+      }
     }
   },
   modules: {

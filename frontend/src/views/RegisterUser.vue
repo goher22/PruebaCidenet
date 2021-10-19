@@ -3,6 +3,9 @@
         <div class="form-row my-5">
             <h1 class="mx-auto">Registro de usuario</h1>
         </div>
+        <div v-if="alert.open" class="alert alert-danger" role="alert">
+            {{alert.msg}}
+        </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Tipo de documento</label>
@@ -58,7 +61,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
     data () {
         return {
@@ -72,6 +75,10 @@ export default {
                 country: '',
                 area: '',
                 date_admission: ''
+            },
+            alert: {
+                open: false,
+                msg: ''
             }
         }
     },
@@ -79,8 +86,12 @@ export default {
         ...mapGetters(['getCountries', 'getDocuments', 'getAreas'])
     },
     methods: {
+        ...mapActions(['save_user']),
         saveUser () {
-            console.log(this.user_data)
+            this.save_user(this.user_data).then(resp => {
+                this.alert.open = !resp.ok
+                this.alert.msg = resp.msg
+            })
         }
     }
 }
