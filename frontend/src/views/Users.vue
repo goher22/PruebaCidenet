@@ -42,6 +42,17 @@
                 </tr>
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li :class="['page-item', {'disabled' : this.page === 1}]">
+                    <a @click="nextuser(-1)" class="page-link" href="#" :aria-disabled="this.page == 1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">{{this.page}}</a></li>
+                <li :class="['page-item', {'disabled' : this.next}]">
+                    <a @click="nextuser(1)" class="page-link" href="#" :aria-disabled="this.next">Next</a>
+                </li>
+            </ul>
+        </nav>
         <Alert v-if="ishowModal" msg="Está seguro de que desea eliminar el empleado" @ok="even_ok" @close="ishowModal = false"></Alert>
         <EditUser v-if="ishowEditUser" :dataprops="userdata" @close="ishowEditUser = false"></EditUser>
     </div>
@@ -57,7 +68,9 @@ export default {
       return {
         ishowModal: false,
         ishowEditUser: false,
-        userdata: {}
+        userdata: {},
+        page: 1,
+        next: false
       };
     },
     components: {
@@ -69,6 +82,12 @@ export default {
     },
     methods:{
         ...mapActions(['load_users', 'delete_users']),
+        nextuser(number){
+            this.page = this.page+number
+            this.load_users(this.page).then(({ok, nextpage}) =>{
+                if(ok) this.next = !nextpage
+            })
+        },
         showModal(data){
             this.userdata = {
                 ...data
@@ -88,7 +107,10 @@ export default {
 
     },
     created: function () {
-        this.load_users()
+        this.load_users().then(({ok, nextpage}) =>{
+            console.log(nextpage)
+            if(ok) this.next = !nextpage
+        })
     }
 }
 </script>

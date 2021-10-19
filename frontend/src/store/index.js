@@ -66,9 +66,11 @@ export default new Vuex.Store({
       const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/documentType`)
       commit('set_document', resp.data.DocumentsType)
     },
-    async load_users ({commit}) {
-      const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/user`)
-      commit('set_users', resp.data.Users)
+    async load_users ({commit}, p=1) {
+      const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/user?page=${p}`)
+      const { Page, TotalPages,  Users} = resp.data
+      commit('set_users', Users)
+      return {ok: true, nextpage: Page < TotalPages}
     },
     async update_users ({commit}, user) {
       try{
