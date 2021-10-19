@@ -26,14 +26,17 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    set_country (state, obj){
+    set_country (state, obj) {
       state.list_country = obj
     },
-    set_area (state, obj){
+    set_area (state, obj) {
       state.list_area = obj
     },
-    set_document (state, obj){
+    set_document (state, obj) {
       state.list_document = obj
+    },
+    set_users (state, obj) {
+      state.list_user = obj
     }
 
   },
@@ -49,6 +52,11 @@ export default new Vuex.Store({
     async load_document ({commit}) {
       const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/documentType`)
       commit('set_document', resp.data.DocumentsType)
+    },
+    async load_users ({commit}) {
+      const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/user`)
+      console.log(resp.data.Users)
+      commit('set_users', resp.data.Users)
     },
     async save_user({_}, user) {
       try {
