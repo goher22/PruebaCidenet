@@ -4,11 +4,11 @@
       <a class="navbar-brand" href="#">Prueba Cidenet</a>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Registro de usuario<span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <router-link to="/Registro" class="nav-link">Registro de usuario</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Lista de usuario</a>
+            <router-link to="/Usuarios" class="nav-link">Lista de usuario</router-link>
           </li>
         </ul>
       </div>
@@ -16,6 +16,12 @@
     <router-view/>
   </div>
 </template>
+
+<style>
+  .router-link-active{
+    color:black !important;
+  }
+</style>
 
 <script>
 import {mapActions} from 'vuex'
