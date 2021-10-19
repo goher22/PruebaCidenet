@@ -11,6 +11,7 @@ const procureUsers = async (req, res) => {
     const [total, users] = await Promise.all([
         User.countDocuments(),
         User.find()
+            .populate('country', 'name')
             .skip(Number(desde))
             .limit(Number(10))
     ])
