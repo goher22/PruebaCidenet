@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -25,8 +26,30 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    set_country (state, obj){
+      state.list_country = obj
+    },
+    set_area (state, obj){
+      state.list_area = obj
+    },
+    set_document (state, obj){
+      state.list_document = obj
+    }
+
   },
   actions: {
+    async load_countries ({commit}) {
+      const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/country`)
+      commit('set_country', resp.data.Contries)
+    },
+    async load_area ({commit}) {
+      const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/area`)
+      commit('set_area', resp.data.Areas)
+    },
+    async load_document ({commit}) {
+      const resp = await axios.get(`${process.env.VUE_APP_URL_API}/api/documentType`)
+      commit('set_document', resp.data.DocumentsType)
+    }
   },
   modules: {
   }

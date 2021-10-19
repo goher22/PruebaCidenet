@@ -18,8 +18,16 @@
 </template>
 
 <script>
-
+import {mapActions} from 'vuex'
 export default {
-  name: 'Home'
+  name: 'Home',
+  methods:{
+    ...mapActions(['load_countries','load_area','load_document'])
+  },
+  created: function () {
+    this.load_countries()
+    this.load_area()
+    this.load_document()
+  }
 }
 </script>
