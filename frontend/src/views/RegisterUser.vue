@@ -65,6 +65,6 @@
                 <input type="date" class="form-control">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 </template>
