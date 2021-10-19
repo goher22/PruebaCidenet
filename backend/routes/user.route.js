@@ -43,7 +43,6 @@ route.put('/:id',[
     check('document_type').custom(existsdocument_type),
     check('document', 'El documento es obligatorio').not().isEmpty(),
     check('document', 'El documento debe tene una longitud máxima será de 20').isLength({max: 20}),
-    check('document').custom(existsDocument),
     check('first_name', 'El primer nombre es obligatorio').not().isEmpty(),
     check('first_name', 'El primer nombre debe tene una longitud máxima será de 20').isLength({max: 20}),
     check('second_name', 'El segundo nombre es obligatorio').not().isEmpty(),
