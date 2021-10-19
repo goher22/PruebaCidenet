@@ -27,7 +27,7 @@ const procureUsers = async (req, res) => {
 
 }
 
-const procureUser = async (req = request, res =response) => {
+const procureUser = async (req, res) => {
     const {id} = req.params
     const user = await User.findById(id)
     res.json(user)    

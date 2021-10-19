@@ -16,4 +16,9 @@ const CountrySchema = Schema({
     }
 })
 
+CountrySchema.methods.toJSON = function(){
+    const {__v, state, iso, ...data} = this.toObject()
+    return data
+}
+
 module.exports = model('Country', CountrySchema)
