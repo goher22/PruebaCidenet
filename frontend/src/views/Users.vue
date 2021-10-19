@@ -35,25 +35,47 @@
                         <button type="button" class="btn btn-primary">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" @click="showModal(item)">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <Alert v-if="ishowModal" msg="Está seguro de que desea eliminar el empleado" @ok="even_ok" @close="ishowModal = false"></Alert>
     </div>
 </template>
 
 <script>
+import Alert from '@/components/alert_modal.vue';
 import {mapActions, mapGetters} from 'vuex'
 export default {
     name: 'Users',
+    data() {
+      return {
+        ishowModal: false,
+        userdata: {}
+      };
+    },
+    components: {
+        Alert
+    },
     computed: {
         ...mapGetters(['getUsers'])
     },
     methods:{
-        ...mapActions(['load_users'])
+        ...mapActions(['load_users', 'delete_users']),
+        showModal(data){
+            this.userdata = {
+                ...data
+            }
+            this.ishowModal = true
+        },
+        even_ok(){
+            this.delete_users(this.userdata._id)
+            this.ishowModal = false
+        }
+
     },
     created: function () {
         this.load_users()
