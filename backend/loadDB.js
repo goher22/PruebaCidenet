@@ -33,7 +33,7 @@ const main = async () => {
             new DocumentType({ name: 'Cédula de Ciudadanía' }),
             new DocumentType({ name: 'Cédula de Extranjería' }),
             new DocumentType({ name: 'Pasaporte' }),
-            new DocumentType({ name: 'Pasaporte' })
+            new DocumentType({ name: 'Permiso Especial' })
         ]
 
         console.log("Cargando base de dato de mongodb..")
